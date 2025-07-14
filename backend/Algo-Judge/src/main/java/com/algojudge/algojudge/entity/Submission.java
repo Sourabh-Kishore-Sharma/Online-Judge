@@ -29,7 +29,10 @@ public class Submission {
     String output;
     String errorMessage;
 
-
-
     LocalDateTime createdOn;
+
+    @PrePersist
+    void onCreate(){
+        this.createdOn = LocalDateTime.now();
+    }
 }
