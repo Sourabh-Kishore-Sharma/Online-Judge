@@ -14,7 +14,6 @@ public class Problem {
     int id;
     String title;
     String description;
-    String author;
     String constraints;
     String inputFormat;
     String outputFormat;
@@ -23,8 +22,11 @@ public class Problem {
     float timeLimit;
     float memoryList;
     String difficultyLevel;
-    int authorId;
     List<String> tags;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    User user;
 
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
     Set<Testcase> testcases;
@@ -32,12 +34,16 @@ public class Problem {
     LocalDateTime createdOn;
     LocalDateTime lastUpdatedOn;
 
-    public Problem(String title, String description, String author, String constraint, LocalDateTime createdOn, LocalDateTime lastUpdatedOn) {
-        this.title = title;
-        this.description = description;
-        this.author = author;
-        this.constraints = constraint;
-        this.createdOn = createdOn;
-        this.lastUpdatedOn = lastUpdatedOn;
+    @PrePersist
+    void onCreate(){
+        this.createdOn = LocalDateTime.now();
+        this.lastUpdatedOn = LocalDateTime.now();
     }
+
+    @PreUpdate
+    void onUpdate(){
+        this.lastUpdatedOn = LocalDateTime.now();
+    }
+
+
 }

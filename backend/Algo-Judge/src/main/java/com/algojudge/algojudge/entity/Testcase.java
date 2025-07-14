@@ -11,8 +11,8 @@ public class Testcase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    int input;
-    int output;
+    String input;
+    String output;
     boolean isSample;
 
     @ManyToOne
@@ -22,5 +22,15 @@ public class Testcase {
     LocalDateTime createdOn;
     LocalDateTime lastUpdatedOn;
 
+    @PrePersist
+    void onCreate(){
+        this.createdOn = LocalDateTime.now();
+        this.lastUpdatedOn = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    void onUpdate(){
+        this.lastUpdatedOn = LocalDateTime.now();
+    }
 
 }
