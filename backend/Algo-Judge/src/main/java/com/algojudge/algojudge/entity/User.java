@@ -23,6 +23,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     Set<Submission> submissions;
 
+    public User() {
+    }
+
     public User(String firstName, String middleName, String lastName) {
         this.firstName = firstName;
         this.middleName = middleName;
