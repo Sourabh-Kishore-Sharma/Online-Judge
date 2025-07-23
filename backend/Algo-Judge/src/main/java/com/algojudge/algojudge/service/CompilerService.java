@@ -7,14 +7,23 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class CompilerService {
     public String compilerAndRun(MultipartFile file, String language, String input) throws IOException {
-        File tempFile = File.createTempFile("submission","."+getExtension(language));
-        file.transferTo(tempFile);
+        Path tempDir = Paths.get("tmp");
+        Files.createDirectories(tempDir);
 
-        ProcessBuilder pb = new ProcessBuilder(getCompileCommand(language, tempFile.getAbsolutePath()));
+        String fileName = file.getOriginalFilename();
+        Path filePath = tempDir.resolve(fileName);
+        file.transferTo(filePath);
+
+        String[] command = getCompileCommand(language, filePath);
+        ProcessBuilder pb = new ProcessBuilder(command)
+                .directory(tempDir.toFile());
         Process process = pb.start();
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))) {
@@ -24,23 +33,24 @@ public class CompilerService {
         String output = new String(process.getInputStream().readAllBytes());
         String errors = new String(process.getErrorStream().readAllBytes());
 
-        // Cleanup
-        tempFile.delete();
-
         if (!errors.isBlank()) {
             return "Compilation Error:\n" + errors;
         }
         return output;
     }
 
-    private String[] getCompileCommand(String language, String path){
+    private String[] getCompileCommand(String language, Path filePath){
+        String fileName = filePath.getFileName().toString();
+        String baseName = fileName.substring(0, fileName.lastIndexOf("."));
+
         // bach -c is required when channing multiple commands like in c++ and java
-        return switch (language) {
-            case "python" -> new String[]{"python3", path};
-            case "java" -> new String[]{"bash", "-c", "javac " + path + " && java " + getClassName(path)};
-            case "cpp" -> new String[]{"bash", "-c", "g++ " + path + " -o out && ./out"};
+        String[] command = switch (language) {
+            case "python" -> new String[]{"python3", fileName};
+            case "java" -> new String[]{"bash", "-c", "javac " + fileName + " && java -cp . " + baseName};
+            case "cpp" -> new String[]{"bash", "-c", "g++ " + fileName + " -o out && ./out"};
             default -> throw new IllegalArgumentException("Unsupported Language");
         };
+        return command;
     }
 
     private String getClassName(String filePath){
