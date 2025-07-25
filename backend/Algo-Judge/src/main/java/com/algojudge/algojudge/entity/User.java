@@ -1,5 +1,6 @@
 package com.algojudge.algojudge.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String email;
+
+    @JsonIgnore
     String password;
 
     String firstName;
