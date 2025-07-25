@@ -1,7 +1,10 @@
 package com.algojudge.algojudge.controller;
 
 import com.algojudge.algojudge.entity.Problem;
+import com.algojudge.algojudge.entity.User;
+import com.algojudge.algojudge.repository.UserRepository;
 import com.algojudge.algojudge.service.ProblemService;
+import com.algojudge.algojudge.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,14 +14,20 @@ import java.util.List;
 @RequestMapping("/api/problems")
 public class ProblemController {
     private final ProblemService problemService;
+    private final UserService userService;
 
-    public ProblemController(ProblemService problemService) {
+    public ProblemController(ProblemService problemService, UserService userService) {
         this.problemService = problemService;
+        this.userService = userService;
     }
 
     // Create
     @PostMapping
     public ResponseEntity<Problem> createProblem(@RequestBody Problem problem) {
+        if(problem.getUser() != null && problem.getUser().getId() != 0){
+            User user = userService.getUserById(problem.getUser().getId()).orElseThrow( () -> new RuntimeException("User not found"));
+            problem.setUser(user);
+        }
         Problem savedProblem = problemService.saveProblem(problem);
         return ResponseEntity.ok(savedProblem);
     }
