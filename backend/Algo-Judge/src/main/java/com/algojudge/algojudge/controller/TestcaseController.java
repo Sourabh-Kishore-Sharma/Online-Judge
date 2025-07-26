@@ -1,5 +1,7 @@
 package com.algojudge.algojudge.controller;
 
+import com.algojudge.algojudge.dto.TestcaseRequestDTO;
+import com.algojudge.algojudge.entity.Problem;
 import com.algojudge.algojudge.entity.Testcase;
 import com.algojudge.algojudge.exception.ResourceNotFoundException;
 import com.algojudge.algojudge.service.ProblemService;
@@ -22,10 +24,14 @@ public class TestcaseController {
 
     // Create
     @PostMapping
-    public ResponseEntity<Testcase> createTestcase(@RequestBody Testcase testcase) {
-        if(testcase.getProblem() != null && testcase.getProblem().getId() != 0){
-            testcase.setProblem(problemService.getProblemById(testcase.getProblem().getId()).orElseThrow(() -> new ResourceNotFoundException("Problem does not exists.")));
-        }
+    public ResponseEntity<Testcase> createTestcase(@RequestBody TestcaseRequestDTO dto) {
+        Problem problem = problemService.getProblemById(dto.getProblemId())
+                .orElseThrow(() -> new RuntimeException("Problem not found"));
+        Testcase testcase = new Testcase();
+        testcase.setInput(dto.getInput());
+        testcase.setOutput(dto.getOutput());
+        testcase.setSample(dto.isSample());
+        testcase.setProblem(problem);
         Testcase savedTestcase = testcaseService.saveTestcase(testcase);
         return ResponseEntity.ok(savedTestcase);
     }
