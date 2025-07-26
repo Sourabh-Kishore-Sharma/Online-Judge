@@ -24,6 +24,7 @@ public class User {
     LocalDateTime lastUpdatedOn;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     Set<Submission> submissions;
 
     public User() {
