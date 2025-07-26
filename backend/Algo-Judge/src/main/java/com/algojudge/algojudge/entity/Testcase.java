@@ -1,5 +1,6 @@
 package com.algojudge.algojudge.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class Testcase {
 
     @ManyToOne
     @JoinColumn(name = "problem_id", nullable = false)
+    @JsonIgnore
     Problem problem;
 
     LocalDateTime createdOn;
