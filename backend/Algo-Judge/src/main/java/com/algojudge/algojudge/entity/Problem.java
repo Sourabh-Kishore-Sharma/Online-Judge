@@ -45,6 +45,10 @@ public class Problem {
         this.lastUpdatedOn = LocalDateTime.now();
     }
 
+    public int getId() {
+        return id;
+    }
+
     public User getUser() {
         return user;
     }
