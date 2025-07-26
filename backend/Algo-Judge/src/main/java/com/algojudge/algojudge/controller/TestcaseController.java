@@ -1,6 +1,8 @@
 package com.algojudge.algojudge.controller;
 
 import com.algojudge.algojudge.entity.Testcase;
+import com.algojudge.algojudge.exception.ResourceNotFoundException;
+import com.algojudge.algojudge.service.ProblemService;
 import com.algojudge.algojudge.service.TestcaseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +13,19 @@ import java.util.List;
 @RequestMapping("/api/testcases")
 public class TestcaseController {
     private final TestcaseService testcaseService;
+    private final ProblemService problemService;
 
-    public TestcaseController(TestcaseService testcaseService) {
+    public TestcaseController(TestcaseService testcaseService, ProblemService problemService) {
         this.testcaseService = testcaseService;
+        this.problemService = problemService;
     }
 
     // Create
     @PostMapping
     public ResponseEntity<Testcase> createTestcase(@RequestBody Testcase testcase) {
+        if(testcase.getProblem() != null && testcase.getProblem().getId() != 0){
+            testcase.setProblem(problemService.getProblemById(testcase.getProblem().getId()).orElseThrow(() -> new ResourceNotFoundException("Problem does not exists.")));
+        }
         Testcase savedTestcase = testcaseService.saveTestcase(testcase);
         return ResponseEntity.ok(savedTestcase);
     }
