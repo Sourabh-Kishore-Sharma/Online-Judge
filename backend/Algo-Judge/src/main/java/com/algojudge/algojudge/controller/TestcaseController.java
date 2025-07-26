@@ -19,9 +19,6 @@ public class TestcaseController {
     // Create
     @PostMapping
     public ResponseEntity<Testcase> createTestcase(@RequestBody Testcase testcase) {
-        if(testcase.){
-
-        }
         Testcase savedTestcase = testcaseService.saveTestcase(testcase);
         return ResponseEntity.ok(savedTestcase);
     }
