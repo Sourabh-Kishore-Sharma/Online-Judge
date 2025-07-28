@@ -8,8 +8,8 @@ const LogIn = () => {
   return (
     <div className="login-parent">
       <form className="login-form" onSubmit={handleSubmit}>
-        <input type="password"></input>
-        <input type="mail"></input>
+        <input type="mail" placeholder="Email Address"></input>
+        <input type="password" placeholder="Password"></input>
         <button type="submit">LogIn</button>
       </form>
     </div>
