@@ -1,13 +1,22 @@
 import { useState } from "react";
+import MonacoEditor from "@monaco-editor/react";
 import "./Compiler.css";
 
 const Compiler = () => {
+  const [mode, setMode] = useState("file");
   const [file, setFile] = useState(null);
-  const [language, setLanguage] = useState("");
+  const [language, setLanguage] = useState("java");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState("");
+  const [code, setCode] = useState("");
+
+  const extMap = {
+    cpp: "cpp",
+    java: "java",
+    python: "py",
+  };
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -17,10 +26,16 @@ const Compiler = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file) {
-      setError("Please select a file.");
+    if ((mode === "file" && !file) || !language) {
+      setError("Please select a file and select a language.");
       return;
     }
+
+    if ((mode === "editor" && !code.trim()) || !language) {
+      setError("Please write some code and select a language.");
+      return;
+    }
+
     setLoading(true);
     setError("");
     setOutput("");
@@ -28,7 +43,15 @@ const Compiler = () => {
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
-      formData.append("file", file);
+
+      if (mode === "file") {
+        formData.append("file", file);
+      } else {
+        const ext = extMap[language];
+        const codeBlob = new Blob([code], { type: "text/plain" });
+        formData.append("file", codeBlob, `Main.${ext}`);
+      }
+
       formData.append("language", language);
       formData.append("input", input);
 
@@ -59,6 +82,23 @@ const Compiler = () => {
     <div className="compiler-parent">
       <form className="compiler-form" onSubmit={handleSubmit}>
         <label>
+          Mode:
+          <input
+            type="radio"
+            value="file"
+            checked={mode === "file"}
+            onChange={() => setMode("file")}
+          />
+          Upload File
+          <input
+            type="radio"
+            value="editor"
+            checked={mode === "editor"}
+            onChange={() => setMode("editor")}
+          />
+          Editor
+        </label>
+        <label>
           Language:
           <select
             value={language}
@@ -79,10 +119,28 @@ const Compiler = () => {
             placeholder="Enter input for your program"
           />
         </label>
-        <label>
-          Source File:
-          <input type="file" onChange={handleFileChange} required />
-        </label>
+        {mode === "file" ? (
+          <label>
+            Source File:
+            <input type="file" onChange={handleFileChange} required />
+          </label>
+        ) : (
+          <label>
+            Code Editor:
+            <MonacoEditor
+              height="600px"
+              width="1000px"
+              value={code}
+              onChange={(value) => setCode(value || "")}
+              options={{
+                theme: "vs-dark",
+                fontSize: 16,
+                minimap: { enabled: false },
+              }}
+            />
+          </label>
+        )}
+
         <button type="submit" disabled={loading}>
           {loading ? "Compiling..." : "Submit"}
         </button>
