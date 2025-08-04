@@ -54,9 +54,10 @@ const Compiler = () => {
 
       formData.append("language", language);
       formData.append("input", input);
+      formData.append("problemId", 2);
 
       const response = await fetch(
-        "http://localhost:8080/api/compiler/submit",
+        "http://localhost:8080/api/compiler/validate",
         {
           method: "POST",
           headers: {
@@ -130,6 +131,7 @@ const Compiler = () => {
             <MonacoEditor
               height="600px"
               width="1000px"
+              language={language}
               value={code}
               onChange={(value) => setCode(value || "")}
               options={{
