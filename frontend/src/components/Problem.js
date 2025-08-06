@@ -6,11 +6,12 @@ const Problem = ({ problem }) => {
       <div className="problem-title">
         {problem.id}. {problem.title}
       </div>
-      <div className="problem-difficultLevel">{problem.difficultyLevel}</div>
-      <div className="problem-description">
-        <div>Description</div>
-        {problem.description}
+      <div
+        className={`problem-difficulty ${problem.difficultyLevel.toLowerCase()}`}
+      >
+        {problem.difficultyLevel}
       </div>
+      <div className="problem-description">{problem.description}</div>
       <div className="problem-inputFormat">{problem.inputFormat}</div>
       <div className="problem-outputFormat">{problem.outputFormat}</div>
       <div className="problem-inputexp">{problem.inputexp}</div>
