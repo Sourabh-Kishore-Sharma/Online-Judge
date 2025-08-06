@@ -1,0 +1,22 @@
+.lab-container {
+  height: 100vh;
+}
+
+.lab-parent {
+  display: flex;
+  border: 1px solid red;
+  flex-direction: row;
+  height: 100%;
+}
+
+.lab-item {
+  border: 1px solid black;
+}
+
+.problem-pane {
+  width: 30%;
+}
+
+.workspace-pane {
+  width: 70%;
+}
