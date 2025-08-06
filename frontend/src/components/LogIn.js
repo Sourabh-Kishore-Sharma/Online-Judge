@@ -22,7 +22,7 @@ const LogIn = () => {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem("token", data.token);
-        navigate("/compiler");
+        navigate("/codelab");
       }
     } catch {
       setError(data.message || "Opps, something went wrong.");

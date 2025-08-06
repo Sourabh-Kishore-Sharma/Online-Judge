@@ -1,0 +1,9 @@
+.problem {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.problem-title {
+  font-size: 30px;
+}

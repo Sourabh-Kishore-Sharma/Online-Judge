@@ -2,9 +2,9 @@ import "./App.css";
 import LogIn from "./components/LogIn";
 import Register from "./components/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Compiler from "./components/Compiler";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CodeLab from "./components/CodeLab/CodeLab";
 
 function App() {
   return (
@@ -15,10 +15,10 @@ function App() {
             <Route path="/" element={<Register />}></Route>
             <Route path="/login" element={<LogIn />}></Route>
             <Route
-              path="/compiler"
+              path="/codelab"
               element={
                 <ProtectedRoute>
-                  <Compiler />
+                  <CodeLab />
                 </ProtectedRoute>
               }
             />
