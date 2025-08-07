@@ -1,9 +1,6 @@
 import MonacoEditor from "@monaco-editor/react";
-import { useState } from "react";
 
-const Editor = ({ language }) => {
-  const [code, setCode] = useState("");
-
+const Editor = ({ language, code, setCode }) => {
   return (
     <div>
       <MonacoEditor
