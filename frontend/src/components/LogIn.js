@@ -6,6 +6,7 @@ const LogIn = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const API_URL = process.env.API_URL;
 
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ const LogIn = () => {
     setError("");
 
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: mail, password }),

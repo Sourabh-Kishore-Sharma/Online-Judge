@@ -13,6 +13,8 @@ const CodeLab = () => {
   const [input, setInput] = useState("");
   const [selectedView, setSelectedView] = useState("input");
 
+  const API_URL = process.env.API_URL;
+
   const extMap = {
     cpp: "cpp",
     java: "java",
@@ -26,9 +28,9 @@ const CodeLab = () => {
 
     let endpoint = "";
     if (type === "run") {
-      endpoint = "/api/compiler/submit";
+      endpoint = `${API_URL}/api/compiler/submit`;
     } else {
-      endpoint = "/api/compiler/validate";
+      endpoint = `${API_URL}/api/compiler/validate`;
     }
     setSelectedView("output");
 
