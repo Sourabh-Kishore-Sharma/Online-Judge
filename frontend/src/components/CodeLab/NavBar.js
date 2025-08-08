@@ -4,12 +4,13 @@ import "./NavBar.css";
 const NavBar = ({ onSelectProblem }) => {
   const [problems, setProblems] = useState([]);
   const [error, setError] = useState("");
+  const API_URL = process.env.API_URL;
 
   useEffect(() => {
     const fetchProblems = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch("/api/problems", {
+        const response = await fetch(`${API_URL}/api/problems`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

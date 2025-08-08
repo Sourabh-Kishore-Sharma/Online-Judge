@@ -12,6 +12,8 @@ const Compiler = () => {
   const [loading, setLoading] = useState("");
   const [code, setCode] = useState("");
 
+  const API_URL = process.env.API_URL;
+
   const extMap = {
     cpp: "cpp",
     java: "java",
@@ -56,7 +58,7 @@ const Compiler = () => {
       formData.append("input", input);
       formData.append("problemId", 2);
 
-      const response = await fetch("/api/compiler/validate", {
+      const response = await fetch(`${API_URL}/api/compiler/validate`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
