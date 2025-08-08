@@ -26,9 +26,9 @@ const CodeLab = () => {
 
     let endpoint = "";
     if (type === "run") {
-      endpoint = "http://localhost:8080/api/compiler/submit";
+      endpoint = "/api/compiler/submit";
     } else {
-      endpoint = "http://localhost:8080/api/compiler/validate";
+      endpoint = "/api/compiler/validate";
     }
     setSelectedView("output");
 

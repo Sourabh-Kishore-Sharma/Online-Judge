@@ -9,7 +9,7 @@ const NavBar = ({ onSelectProblem }) => {
     const fetchProblems = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:8080/api/problems", {
+        const response = await fetch("/api/problems", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
