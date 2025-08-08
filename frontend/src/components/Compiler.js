@@ -56,16 +56,13 @@ const Compiler = () => {
       formData.append("input", input);
       formData.append("problemId", 2);
 
-      const response = await fetch(
-        "http://localhost:8080/api/compiler/validate",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      );
+      const response = await fetch("/api/compiler/validate", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
       const data = await response.json();
       if (response.ok) {
         setOutput(data.verdict || "No output received.");
