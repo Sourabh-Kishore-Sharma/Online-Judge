@@ -58,7 +58,9 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         // Allow requests from all origins for development.
         // In production, replace "*" with specific frontend origins (e.g., "http://localhost:3000", "https://yourfrontend.com")
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000",
+                "https://lab.myjobcraft.app",
+                "https://www.lab.myjobcraft.app"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allowed HTTP methods
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept")); // Allowed request headers
         configuration.setAllowCredentials(true); // Allow sending credentials (cookies, HTTP authentication, client certificates)
