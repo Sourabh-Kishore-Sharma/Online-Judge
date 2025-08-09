@@ -119,8 +119,8 @@ const CodeLab = () => {
           required
         >
           <option value="cpp">C++</option>
-          <option value="python">Python</option>
-          <option value="java">Java</option>
+          <option value="python">Python 3</option>
+          <option value="java">Java 8</option>
         </select>
       </div>
       <div className="navbar-overlay">
