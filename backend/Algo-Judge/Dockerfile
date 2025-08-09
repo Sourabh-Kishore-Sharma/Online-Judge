@@ -1,12 +1,12 @@
 FROM openjdk:17-jdk-slim
 
 # Install C++ compiler and Python
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     g++ \
     python3 \
     python3-pip \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
