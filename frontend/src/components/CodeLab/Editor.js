@@ -10,7 +10,7 @@ const Editor = ({ language, code, setCode }) => {
         value={code}
         onChange={(value) => setCode(value || "")}
         options={{
-          theme: "vs-dark",
+          theme: "vs-light",
           fontSize: 16,
           minimap: { enabled: false },
         }}

@@ -13,7 +13,7 @@ const CodeLab = () => {
   const [input, setInput] = useState("");
   const [selectedView, setSelectedView] = useState("input");
 
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "";
 
   const extMap = {
     cpp: "cpp",
@@ -67,7 +67,12 @@ const CodeLab = () => {
   return (
     <div className="lab-container">
       <div className="lab-header">
-        <button onClick={() => setSelectedProblem(null)}>All Problems</button>
+        <button
+          className="all-problems-nav-button"
+          onClick={() => setSelectedProblem(null)}
+        >
+          All Problems
+        </button>
         <div className="action-buttons">
           <button
             onClick={(e) => handleAction("run", e)}
@@ -83,11 +88,11 @@ const CodeLab = () => {
           </button>
         </div>
         <select
+          className="language-select"
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
           required
         >
-          <option value="">Select Language</option>
           <option value="cpp">C++</option>
           <option value="python">Python</option>
           <option value="java">Java</option>
