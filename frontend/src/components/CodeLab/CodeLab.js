@@ -1,13 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./CodeLab.css";
 import Problem from "../Problem";
 import NavBar from "./NavBar";
 import Editor from "./Editor";
 
+const boilerplates = {
+  cpp: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+  // Your code here
+  return 0;
+}`,
+  java: `public class Main {
+  public static void main(String[] args) {
+      // Your code here
+  }
+}`,
+  python: `def main():
+  # Your code here
+  pass
+
+if __name__ == "__main__":
+  main()`,
+};
+
 const CodeLab = () => {
   const [selectedProblem, setSelectedProblem] = useState(null);
   const [language, setLanguage] = useState("java");
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(boilerplates["java"]);
   const [output, setOutput] = useState("");
   const [action, setAction] = useState("");
   const [input, setInput] = useState("");
@@ -20,6 +41,10 @@ const CodeLab = () => {
     java: "java",
     python: "py",
   };
+
+  useEffect(() => {
+    setCode(boilerplates[language]);
+  }, [language]);
 
   const handleAction = async (type, e) => {
     e.preventDefault();
