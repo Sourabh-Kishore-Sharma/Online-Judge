@@ -10,3 +10,15 @@ body {
   height: 100%;
   background-color: #f5f7fa;
 }
+
+.login-parent .login-form,
+.register-parent .register-form {
+  width: 50%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.login-parent input,
+.register-parent input {
+  width: 100%;
+}
