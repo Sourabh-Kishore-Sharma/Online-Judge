@@ -12,7 +12,7 @@ const Compiler = () => {
   const [loading, setLoading] = useState("");
   const [code, setCode] = useState("");
 
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "";
 
   const extMap = {
     cpp: "cpp",

@@ -10,9 +10,25 @@
 }
 
 .easy {
-  background-color: rgb(1, 59, 1);
+  background-color: #ffffff1a;
   border-radius: 8px;
   padding: 4px;
   width: fit-content;
-  color: white;
+  color: green;
+}
+
+.medium {
+  background-color: #ffffff1a;
+  border-radius: 8px;
+  padding: 4px;
+  width: fit-content;
+  color: orange;
+}
+
+.hard {
+  background-color: #ffffff1a;
+  border-radius: 8px;
+  padding: 4px;
+  width: fit-content;
+  color: red;
 }
