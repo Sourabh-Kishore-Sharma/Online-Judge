@@ -33,6 +33,9 @@ const LogIn = () => {
   return (
     <div className="login-parent">
       <form className="login-form" onSubmit={handleSubmit}>
+        <div>
+          <img src="/favicon/favicon-32x32.png" alt="logo" />
+        </div>
         <input
           type="mail"
           placeholder="Email Address"
