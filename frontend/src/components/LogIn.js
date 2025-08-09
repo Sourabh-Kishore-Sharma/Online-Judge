@@ -33,22 +33,43 @@ const LogIn = () => {
   return (
     <div className="login-parent">
       <form className="login-form" onSubmit={handleSubmit}>
-        <div>
-          <img src="/favicon/favicon-32x32.png" alt="logo" />
+        <div className="logo-parent">
+          <img
+            src="favicon/logo.png"
+            width={"80px"}
+            height={"60px"}
+            alt="logo"
+          />
         </div>
         <input
-          type="mail"
-          placeholder="Email Address"
+          type="email"
+          placeholder="Email Address*"
           value={mail}
           onChange={(e) => setMail(e.target.value)}
+          required
         ></input>
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Password*"
           value={password}
+          required
           onChange={(e) => setPassword(e.target.value)}
         ></input>
-        <button type="submit">LogIn</button>
+        <div className="form-actions">
+          <button className="login-button" type="submit">
+            LogIn
+          </button>
+          <div>
+            New User ?{" "}
+            <button
+              type="button"
+              className="register-button"
+              onClick={() => navigate("/")}
+            >
+              Register
+            </button>
+          </div>
+        </div>
         {error && <div className="error">{error}</div>}
       </form>
     </div>

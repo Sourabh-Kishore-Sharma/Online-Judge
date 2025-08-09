@@ -1,7 +1,10 @@
-.login-form {
+.login-parent .login-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 100px;
+  background-color: bisque;
+  border-radius: 8px;
 }
 
 .login-parent {
@@ -9,4 +12,62 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+.login-parent .login-button {
+  all: unset;
+  text-align: center;
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.login-parent .logo-parent {
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+}
+
+.login-parent .logo-parent img {
+  border-radius: 8px;
+}
+
+.login-parent input {
+  all: unset;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.login-parent .login-button:hover {
+  background-color: #f0f0f0;
+  border-color: #666;
+  color: #000;
+}
+
+.login-parent .form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  justify-items: center;
+  flex-direction: column;
+}
+
+.login-parent .register-button {
+  all: unset;
+  color: blue;
+  cursor: pointer;
+}
+
+.login-parent .error {
+  color: red;
 }
