@@ -7,17 +7,13 @@
   left: 0;
 }
 
-.problems-list {
+.problems-item:hover {
+  cursor: pointer;
+  background-color: grey;
 }
 
 .problems-item {
   padding: 10px;
   background-color: black;
   color: white;
-}
-
-.active {
-}
-
-.navbar-overlay {
 }
