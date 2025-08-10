@@ -1,12 +1,10 @@
 FROM openjdk:17-jdk-slim
 
-# Install C++ compiler, Python, sudo, and unshare
 RUN apt-get update && apt-get install -y \
     g++ \
     python3 \
     python3-pip \
-    sudo \
-    util-linux \
+    coreutils \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
