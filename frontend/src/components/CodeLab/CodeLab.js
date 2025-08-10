@@ -34,7 +34,7 @@ const CodeLab = () => {
   const [action, setAction] = useState("");
   const [input, setInput] = useState("");
   const [selectedView, setSelectedView] = useState("input");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const API_URL = process.env.REACT_APP_API_URL || "";
 
