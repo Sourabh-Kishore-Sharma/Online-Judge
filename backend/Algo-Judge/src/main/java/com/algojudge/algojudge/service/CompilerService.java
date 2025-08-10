@@ -53,18 +53,19 @@ public class CompilerService {
 
         return switch (language) {
             case "python" -> new String[]{
-                    "timeout", String.valueOf(TIMEOUT_SECONDS),
-                    "python3", fileName
+                    "bash", "-c",
+                    "timeout " + TIMEOUT_SECONDS + "s python3 " + fileName
             };
             case "java" -> new String[]{
                     "bash", "-c",
-                    "timeout " + TIMEOUT_SECONDS + "s javac " + fileName + " && timeout " + TIMEOUT_SECONDS + "s java -cp . " + baseName
+                    "javac " + fileName + " && timeout " + TIMEOUT_SECONDS + "s java -cp . " + baseName
             };
             case "cpp" -> new String[]{
                     "bash", "-c",
-                    "timeout " + TIMEOUT_SECONDS + "s g++ " + fileName + " -o out && timeout " + TIMEOUT_SECONDS + "s ./out"
+                    "g++ " + fileName + " -o out && timeout " + TIMEOUT_SECONDS + "s ./out"
             };
             default -> throw new IllegalArgumentException("Unsupported Language");
         };
     }
+
 }
