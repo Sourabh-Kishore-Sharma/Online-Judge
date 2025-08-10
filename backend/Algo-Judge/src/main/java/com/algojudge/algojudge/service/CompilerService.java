@@ -17,35 +17,68 @@ public class CompilerService {
     private static final int TIMEOUT_SECONDS = 5;
 
     public String compilerAndRun(MultipartFile file, String language, String input) throws IOException {
-        Path tempDir = Paths.get("tmp");
-        Files.createDirectories(tempDir);
+        // Create a unique temp directory per execution
+        Path tempDir = Files.createTempDirectory("sandbox_");
 
-        String fileName = file.getOriginalFilename();
-        Path filePath = tempDir.resolve(fileName);
-        file.transferTo(filePath);
+        try {
+            String fileName = file.getOriginalFilename();
+            Path filePath = tempDir.resolve(fileName);
+            file.transferTo(filePath);
 
-        String[] command = getSafeCommand(language, filePath);
-        ProcessBuilder pb = new ProcessBuilder(command)
-                .directory(tempDir.toFile());
+            String[] command = getSafeCommand(language, filePath);
+            ProcessBuilder pb = new ProcessBuilder(command)
+                    .directory(tempDir.toFile());
 
-        // Drop privileges to "nobody" user
-        pb.environment().put("USER", "nobody");
+            // Drop privileges (works only if container has 'nobody' user)
+            pb.environment().put("USER", "nobody");
 
-        Process process = pb.start();
+            Process process = pb.start();
 
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))) {
-            writer.write(input);
-            writer.flush();
+            // Send input to the program
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))) {
+                if (input != null && !input.isBlank()) {
+                    writer.write(input);
+                    writer.flush();
+                }
+            }
+
+            // Hard kill if it runs too long
+            boolean finished;
+            try {
+                finished = process.waitFor(TIMEOUT_SECONDS, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                process.destroyForcibly();
+                Thread.currentThread().interrupt();
+                return "Execution interrupted.";
+            }
+
+            if (!finished) {
+                process.destroyForcibly();
+                return "Execution timed out after " + TIMEOUT_SECONDS + " seconds.";
+            }
+
+            String output = new String(process.getInputStream().readAllBytes());
+            String errors = new String(process.getErrorStream().readAllBytes());
+
+            if (!errors.isBlank()) {
+                return "Compilation/Runtime Error:\n" + errors;
+            }
+            return output;
+
+        } finally {
+            // Clean up sandbox directory
+            try {
+                Files.walk(tempDir)
+                        .sorted((a, b) -> b.compareTo(a)) // delete files before dirs
+                        .forEach(path -> {
+                            try {
+                                Files.deleteIfExists(path);
+                            } catch (IOException ignored) {}
+                        });
+            } catch (IOException ignored) {}
         }
-
-        String output = new String(process.getInputStream().readAllBytes());
-        String errors = new String(process.getErrorStream().readAllBytes());
-
-        if (!errors.isBlank()) {
-            return "Compilation/Runtime Error:\n" + errors;
-        }
-        return output;
     }
+
 
     private String[] getSafeCommand(String language, Path filePath) {
         String fileName = filePath.getFileName().toString();
