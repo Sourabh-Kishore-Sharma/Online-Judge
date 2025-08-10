@@ -35,6 +35,7 @@ const Register = () => {
       });
       const data = response.json();
       if (response.ok) {
+        setLoading(false);
         navigate("/login");
       } else setError(data.message || "Registeration Failed !!");
     } catch {
