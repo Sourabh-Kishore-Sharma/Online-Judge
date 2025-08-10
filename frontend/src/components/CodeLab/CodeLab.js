@@ -3,6 +3,7 @@ import "./CodeLab.css";
 import Problem from "../Problem";
 import NavBar from "./NavBar";
 import Editor from "./Editor";
+import LoadingOverlay from "../Overlay/LoadingOverlay";
 
 const boilerplates = {
   cpp: `#include <bits/stdc++.h>
@@ -33,6 +34,7 @@ const CodeLab = () => {
   const [action, setAction] = useState("");
   const [input, setInput] = useState("");
   const [selectedView, setSelectedView] = useState("input");
+  const [loading, setLoading] = useState(true);
 
   const API_URL = process.env.REACT_APP_API_URL || "";
 
@@ -50,6 +52,7 @@ const CodeLab = () => {
     e.preventDefault();
     setOutput("");
     setAction(type);
+    setLoading(true);
 
     let endpoint = "";
     if (type === "run") {
@@ -86,11 +89,14 @@ const CodeLab = () => {
       }
     } catch {
       setOutput("Network Error.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="lab-container">
+      <LoadingOverlay show={loading} />
       <div className="lab-header">
         <button
           className="all-problems-nav-button"

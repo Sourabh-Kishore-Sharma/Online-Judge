@@ -1,6 +1,7 @@
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import LoadingOverlay from "./Overlay/LoadingOverlay";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -8,6 +9,7 @@ const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
   const API_URL = process.env.REACT_APP_API_URL || "";
@@ -17,6 +19,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const response = await fetch(`${API_URL}/api/auth/register`, {
@@ -36,11 +39,14 @@ const Register = () => {
       } else setError(data.message || "Registeration Failed !!");
     } catch {
       setError("Opps, something went wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="register-parent">
+      <LoadingOverlay show={loading} />
       <form className="register-form" onSubmit={handleSubmit}>
         <div className="logo-parent">
           <img
