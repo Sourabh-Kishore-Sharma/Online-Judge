@@ -15,7 +15,7 @@ public class PerplexityController {
         this.perplexityService = perplexityService;
     }
 
-    @GetMapping("/ask")
+    @PostMapping("/ask")
     public ResponseEntity<Map<String,String>> ask(@RequestBody String query){
         String ans = perplexityService.getAnswer(query);
         return ResponseEntity.ok(Map.of("answer",ans));
