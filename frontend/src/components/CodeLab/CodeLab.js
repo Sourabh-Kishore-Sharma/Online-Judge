@@ -129,13 +129,13 @@ const CodeLab = () => {
           <option value="python">Python 3</option>
           <option value="java">Java 8</option>
         </select>
-        <ChatBot />
       </div>
       <div className="navbar-overlay">
         {!selectedProblem && <NavBar onSelectProblem={setSelectedProblem} />}
       </div>
       <div className="lab-parent">
         <div className="lab-item problem-pane">
+          <ChatBot />
           {selectedProblem && (
             <div>
               <Problem problem={selectedProblem} />
