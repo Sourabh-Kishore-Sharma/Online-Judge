@@ -12,7 +12,9 @@ public class PerplexityRequestDTO {
                 new Message("system", "Be precise and concise. Only answer questions related to DSA, programming, or design patterns. " +
                         "Do not provide any code snippets — only give hints. " +
                         "If the user asks for code or something outside these topics, respond with: " +
-                        "'I am only allowed to respond to design patterns or programming or DSA queries.'"),
+                        "'I am only allowed to respond to design patterns or programming or DSA queries.'" +
+                        "Do not include any internal reasoning or `<think>` tags in your response. Respond with the final answer only."
+                ),
                 new Message("user", query));
     }
 
