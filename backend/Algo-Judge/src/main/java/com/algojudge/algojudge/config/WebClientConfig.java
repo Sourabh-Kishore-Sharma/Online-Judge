@@ -3,6 +3,7 @@ package com.algojudge.algojudge.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
@@ -18,8 +19,10 @@ public class WebClientConfig {
     public WebClient perplexityWebClient(){
         return WebClient.builder()
                 .baseUrl(baseUrl)
-                .defaultHeader("Authorization","Bearer " + apiKey)
-                .defaultHeader("Content-Type","application/json")
+                .defaultHeaders(headers -> {
+                    headers.setBearerAuth(apiKey);
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+                })
                 .build();
     }
 }
