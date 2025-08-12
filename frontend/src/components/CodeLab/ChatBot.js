@@ -18,8 +18,14 @@ const ChatBot = () => {
     setUserInput("");
 
     try {
+      const token = localStorage.getItem("token");
+
       const res = await fetch(`${API_URL}/api/ai/ask`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ query: currInput }),
       });
       const data = await res.json();
