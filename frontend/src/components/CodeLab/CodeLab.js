@@ -4,6 +4,7 @@ import Problem from "../Problem";
 import NavBar from "./NavBar";
 import Editor from "./Editor";
 import LoadingOverlay from "../Overlay/LoadingOverlay";
+import ChatBot from "./ChatBot";
 
 const boilerplates = {
   cpp: `#include <bits/stdc++.h>
@@ -128,6 +129,7 @@ const CodeLab = () => {
           <option value="python">Python 3</option>
           <option value="java">Java 8</option>
         </select>
+        <ChatBot />
       </div>
       <div className="navbar-overlay">
         {!selectedProblem && <NavBar onSelectProblem={setSelectedProblem} />}

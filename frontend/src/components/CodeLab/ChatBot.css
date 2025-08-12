@@ -1,0 +1,96 @@
+.bot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #4cafef;
+  color: white;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bot-parent {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  height: 420px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.bot-header {
+  background: #4cafef;
+  color: white;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bot-close {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.bot-body {
+  flex: 1;
+  padding: 10px;
+  background: #f4f4f4;
+  /* overflow-y: auto; */
+}
+
+.message {
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+.user-msg {
+  background-color: #0084ff;
+  color: white;
+  margin-left: auto;
+}
+
+.bot-msg {
+  background-color: #e5e5ea;
+  color: black;
+  margin-right: auto;
+}
+
+.message .user {
+  align-self: flex-end;
+  background-color: #d1e7dd;
+}
+
+.message .bot {
+  align-self: flex-start;
+  background-color: #f8d7da;
+}
+
+.bot-query {
+  display: flex;
+}
+
+.bot-parent input {
+  flex: 1;
+  border: none;
+  padding: 8px;
+}
+
+.bot-parent button {
+  border: none;
+  padding: 8px;
+}
