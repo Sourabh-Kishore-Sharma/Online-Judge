@@ -1,7 +1,7 @@
 .bot-icon {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  left: 20px;
   background: #4cafef;
   color: white;
   padding: 12px;
@@ -15,7 +15,7 @@
 .bot-parent {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  left: 20px;
   width: 320px;
   height: 420px;
   background: white;
