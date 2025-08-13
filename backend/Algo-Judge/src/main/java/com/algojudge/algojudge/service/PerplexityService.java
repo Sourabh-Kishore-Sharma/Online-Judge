@@ -13,6 +13,12 @@ public class PerplexityService {
         this.perWebClient = webClient;
     }
 
+    private String cleanResponse(String raw){
+        return raw.replaceAll("(?s)<think>.*</think>","")
+                .replaceAll("\\R+"," ")
+                .trim();
+    }
+
     public String getAnswer(String query){
         PerplexityResponseDTO response = perWebClient.post()
                 .uri("/chat/completions")
@@ -22,7 +28,7 @@ public class PerplexityService {
                 .block();
 
         if(response != null && response.getChoices() != null && !response.getChoices().isEmpty()){
-            return response.getChoices().get(0).getMessage().getContent();
+            return cleanResponse(response.getChoices().get(0).getMessage().getContent());
         }
         return "Opps, something went wrong.";
     }
