@@ -86,6 +86,8 @@ public class CompilerController extends BaseController{
         submission.setUser(user);
         submission.setProblem(problem);
         submission.setCode(code);
+        submission.setLanguage(language);
+        submission.setLanguage(verdict);
         submissionService.saveSubmission(submission);
         return ResponseEntity.ok().body(Map.of("verdict", verdict));
     }

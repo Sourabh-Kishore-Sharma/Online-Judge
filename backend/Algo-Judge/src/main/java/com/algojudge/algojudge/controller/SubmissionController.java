@@ -1,7 +1,12 @@
 package com.algojudge.algojudge.controller;
 
+import com.algojudge.algojudge.entity.Problem;
 import com.algojudge.algojudge.entity.Submission;
+import com.algojudge.algojudge.entity.User;
+import com.algojudge.algojudge.exception.ResourceNotFoundException;
+import com.algojudge.algojudge.service.ProblemService;
 import com.algojudge.algojudge.service.SubmissionService;
+import com.algojudge.algojudge.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,39 +14,25 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/submissions")
-public class SubmissionController {
+public class SubmissionController extends BaseController {
 
     private final SubmissionService submissionService;
+    private final UserService userService;
+    private final ProblemService problemService;
 
-    public SubmissionController(SubmissionService submissionService) {
+    public SubmissionController(SubmissionService submissionService, UserService userService, ProblemService problemService) {
         this.submissionService = submissionService;
+        this.userService = userService;
+        this.problemService = problemService;
     }
 
-    // Create a new submission
-    @PostMapping
-    public ResponseEntity<Submission> createSubmission(@RequestBody Submission submission) {
-        Submission savedSubmission = submissionService.saveSubmission(submission);
-        return ResponseEntity.ok(savedSubmission);
-    }
-
-    // Get all submissions
     @GetMapping
-    public ResponseEntity<List<Submission>> getAllSubmissions() {
-        return ResponseEntity.ok(submissionService.getAllSubmissions());
+    public ResponseEntity<List<Submission>> getUserSubmissions(@RequestParam int problemId){
+        User user = userService.findByEmail(gerUsernameFromJwt()).orElseThrow(() -> new ResourceNotFoundException("User not found."));
+        Problem problem = problemService.getProblemById(problemId).orElseThrow(() -> new ResourceNotFoundException("Problem not found."));
+        List<Submission> submissions = submissionService.getSubmissionsByUserAndProblem(user, problem);
+        return ResponseEntity.ok(submissions);
     }
 
-    // Get submission by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Submission> getSubmissionById(@PathVariable int id) {
-        return submissionService.getSubmissionById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
 
-    // Delete submission by ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSubmission(@PathVariable int id) {
-        submissionService.deleteSubmissionById(id);
-        return ResponseEntity.noContent().build();
-    }
 }
