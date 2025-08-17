@@ -39,3 +39,19 @@
   width: fit-content;
   color: red;
 }
+
+.problem-header {
+  display: flex;
+  gap: 10px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.problem-header button {
+  all: unset;
+  padding: 8px 16px;
+  border-radius: 6px 6px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+}
