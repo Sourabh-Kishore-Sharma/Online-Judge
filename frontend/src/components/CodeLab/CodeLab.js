@@ -135,7 +135,7 @@ const CodeLab = () => {
       </div>
       <div className="lab-parent">
         <div className="lab-item problem-pane">
-          {selectedProblem && <ChatBot />}
+          {selectedProblem && <ChatBot problemId={selectedProblem.id} />}
           {selectedProblem && (
             <div>
               <Problem problem={selectedProblem} setCode={setCode} />

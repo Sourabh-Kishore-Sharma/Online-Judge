@@ -3,7 +3,7 @@ import "./ChatBot.css";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import { FaWindowClose } from "react-icons/fa";
 
-const ChatBot = () => {
+const ChatBot = ({ problemId }) => {
   const [active, setActive] = useState(false);
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
@@ -26,7 +26,7 @@ const ChatBot = () => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ query: currInput }),
+        body: JSON.stringify({ query: currInput, problemId }),
       });
       const data = await res.json();
 
