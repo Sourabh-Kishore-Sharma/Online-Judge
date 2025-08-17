@@ -40,6 +40,20 @@ public class Problem {
         this.lastUpdatedOn = LocalDateTime.now();
     }
 
+    @Override
+    public String toString() {
+        return "Problem{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", constraints='" + constraints + '\'' +
+                ", inputFormat='" + inputFormat + '\'' +
+                ", outputFormat='" + outputFormat + '\'' +
+                ", exampleInput='" + exampleInput + '\'' +
+                ", exampleOutput='" + exampleOutput + '\'' +
+                ", difficultyLevel='" + difficultyLevel +
+                '}';
+    }
+
     @PreUpdate
     void onUpdate(){
         this.lastUpdatedOn = LocalDateTime.now();

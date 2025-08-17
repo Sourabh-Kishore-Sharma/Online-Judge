@@ -19,10 +19,10 @@ public class PerplexityService {
                 .trim();
     }
 
-    public String getAnswer(String query){
+    public String getAnswer(String query, String problemInfo){
         PerplexityResponseDTO response = perWebClient.post()
                 .uri("/chat/completions")
-                .bodyValue(new PerplexityRequestDTO(query))
+                .bodyValue(new PerplexityRequestDTO(query, problemInfo))
                 .retrieve()
                 .bodyToMono(PerplexityResponseDTO.class)
                 .block();

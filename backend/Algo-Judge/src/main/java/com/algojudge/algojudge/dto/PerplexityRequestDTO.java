@@ -6,14 +6,22 @@ public class PerplexityRequestDTO {
     private final String model;
     private final List<Message> messages;
 
-    public PerplexityRequestDTO(String query) {
+    public PerplexityRequestDTO(String query, String problemInfo) {
         this.model = "sonar-reasoning";
         this.messages = List.of(
-                new Message("system", "Be precise and concise. Only answer questions related to DSA, programming, or design patterns. " +
-                        "Do not provide any code snippets — only give hints. " +
-                        "If the user asks for code or something outside these topics, respond with: " +
-                        "'I am only allowed to respond to design patterns or programming or DSA queries.'" +
-                        "Do not include any internal reasoning or `<think>` tags in your response. Respond with the final answer only."
+                new Message("system",
+                        "You are a helpful assistant for DSA and programming. " +
+                                "Rules:\n" +
+                                "1. Be precise and concise.\n" +
+                                "2. Only answer questions related to DSA, programming, or design patterns.\n" +
+                                "3. Do NOT provide full code snippets — only hints and approaches.\n" +
+                                "4. If asked for code or unrelated topics, respond with: " +
+                                "'I am only allowed to respond to design patterns or programming or DSA queries.'\n" +
+                                "5. Never include internal reasoning or <think> tags.\n\n" +
+                                "Context: The following is the problem description provided for reference.\n" +
+                                "----------------------\n" +
+                                 problemInfo + "\n" +
+                                "----------------------"
                 ),
                 new Message("user", query));
     }
