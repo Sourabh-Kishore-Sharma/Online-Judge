@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./ChatBot.css";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import { FaWindowClose } from "react-icons/fa";
+import ReactMarkdown from "react-markdown";
 
 const ChatBot = ({ problemId }) => {
   const [active, setActive] = useState(false);
@@ -63,7 +64,7 @@ const ChatBot = ({ problemId }) => {
               msg.sender === "user" ? "user-msg" : "bot-msg"
             }`}
           >
-            {msg.text}
+            <ReactMarkdown>{msg.text}</ReactMarkdown>
           </div>
         ))}
       </div>
