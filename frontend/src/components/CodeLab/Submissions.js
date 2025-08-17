@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import "./Submissions.css";
+import LoadingOverlay from "../Overlay/LoadingOverlay";
+import { FaCopy } from "react-icons/fa6";
+import { BiSolidFileImport } from "react-icons/bi";
 
 const Submissions = ({ problemId, setCode }) => {
   const [submissions, setSubmissions] = useState([]);
@@ -8,9 +11,21 @@ const Submissions = ({ problemId, setCode }) => {
 
   const API_URL = process.env.REACT_APP_API_URL || "";
 
+  const copyToClipboard = ({ text }) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        alert("Copied to Clipboard !! ");
+      })
+      .catch((err) => {
+        alert("Falied to Copy !!");
+      });
+  };
+
   useEffect(() => {
     const fetchSubmissions = async () => {
       const endpoint = `${API_URL}/api/submissions?problemId=${problemId}`;
+      setLoading(true);
       const res = await fetch(endpoint, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
@@ -19,6 +34,7 @@ const Submissions = ({ problemId, setCode }) => {
 
       const data = await res.json();
       setSubmissions(data);
+      setLoading(false);
     };
 
     fetchSubmissions();
@@ -26,6 +42,7 @@ const Submissions = ({ problemId, setCode }) => {
 
   return (
     <div className="submissions-parent">
+      <LoadingOverlay show={loading} />
       <table className="submissions-table">
         <thead>
           <tr className="submission-header">
@@ -39,14 +56,21 @@ const Submissions = ({ problemId, setCode }) => {
             <tr key={sub.id}>
               <td>{new Date(sub.createdOn).toLocaleString()}</td>
               <td>{sub.status}</td>
-              <td>
-                <button
+              <td className="actions">
+                <FaCopy
+                  title="Copy"
+                  onClick={() => {
+                    copyToClipboard({ text: sub.code });
+                  }}
+                  size={"16px"}
+                />
+                <BiSolidFileImport
+                  title="Copy to Editor"
                   onClick={() => {
                     setCode(sub.code);
                   }}
-                >
-                  Copy to Editor
-                </button>
+                  size={"16px"}
+                />
               </td>
             </tr>
           ))}

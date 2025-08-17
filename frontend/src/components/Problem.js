@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Problem.css";
 import Submissions from "./CodeLab/Submissions";
 
-const Problem = ({ problem }) => {
+const Problem = ({ problem, setCode }) => {
   const [activeTab, setActiveTab] = useState("problem");
 
   return (
@@ -48,7 +48,7 @@ const Problem = ({ problem }) => {
       {activeTab === "submissions" && (
         <div className="submissions">
           {" "}
-          <Submissions problemId={problem.id} />{" "}
+          <Submissions problemId={problem.id} setCode={setCode} />{" "}
         </div>
       )}
     </div>

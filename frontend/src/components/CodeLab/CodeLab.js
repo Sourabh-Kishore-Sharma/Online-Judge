@@ -138,7 +138,7 @@ const CodeLab = () => {
           {selectedProblem && <ChatBot />}
           {selectedProblem && (
             <div>
-              <Problem problem={selectedProblem} />
+              <Problem problem={selectedProblem} setCode={setCode} />
             </div>
           )}
         </div>
