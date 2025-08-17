@@ -19,6 +19,8 @@ public class Submission {
     @JoinColumn(name = "problem_id", nullable = false)
     Problem problem;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     String code;
     String language;
 
